@@ -3,12 +3,20 @@ import Book from "../models/book.js";
 // Create a book
 export const createBook = async (req, res) => {
   try {
-    const { bookId, title, author, genre, rating } = req.body;
-    const book = new Book({ bookId, title, author, genre, rating, reviews: [] });
-    await book.save();
-    res.status(201).json(book);
+    const { bookId, title, author, genre, rating, reviews } = req.body;
+    const newBook = new Book({
+      bookId,
+      title,
+      author,
+      genre,
+      rating,
+      reviews: reviews || [] 
+    });
+
+    await newBook.save(); 
+    res.status(201).json(newBook);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
